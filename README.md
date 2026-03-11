@@ -15,7 +15,7 @@
    ↓  HTTP streaming
 🔗 ngrok tunnel     (public HTTPS bridge — changes each Colab session)
    ↓
-🖥️ Google Colab T4 GPU  (your fine-tuned LLaMA 3.1 8B model)
+🖥️ Google Colab T4 GPU  (my fine-tuned LLaMA 3.1 8B model)
 ```
 
 ---

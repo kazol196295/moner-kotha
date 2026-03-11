@@ -3,7 +3,6 @@ import requests
 import json
 import time
 
-# ── Page config ────────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="মনের কথা",
     page_icon="🌿",
@@ -11,7 +10,6 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── Styles ─────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;700&display=swap');
@@ -27,7 +25,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
         radial-gradient(ellipse 60% 70% at 90% 90%, rgba(80,60,30,.25) 0%, transparent 55%);
 }
 
-/* ── Sidebar ── */
 [data-testid="stSidebar"] {
     background: rgba(15,26,18,.97) !important;
     border-right: 1px solid rgba(107,143,113,.2) !important;
@@ -47,7 +44,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 .section-head { font-size: .65rem; letter-spacing: .14em; text-transform: uppercase;
                 color: #6b8f71; font-weight: 700; margin-bottom: .7rem; }
 
-/* status badges */
 .status-badge { display:inline-flex; align-items:center; gap:.4rem;
                 padding:.3rem .8rem; border-radius:999px; font-size:.73rem; font-weight:500; }
 .status-online  { background:rgba(107,143,113,.15); border:1px solid rgba(107,143,113,.4); color:#a8d5a2; }
@@ -60,7 +56,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
     50%      { box-shadow:0 0 0 4px rgba(107,143,113,0); }
 }
 
-/* radio topics */
 .stRadio > label { display:none; }
 [data-testid="stRadio"] div[role="radiogroup"] { gap:.2rem !important; display:flex !important; flex-direction:column !important; }
 [data-testid="stRadio"] label {
@@ -78,7 +73,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 .turns-chip { background:rgba(107,143,113,.1); border-radius:8px;
               padding:.2rem .6rem; font-size:.73rem; color:#6b8f71; display:inline-block; }
 
-/* ── Main chat ── */
 .topic-bar {
     display:flex; align-items:center; gap:.75rem; padding:.7rem 1.2rem;
     background:rgba(107,143,113,.07); border:1px solid rgba(107,143,113,.15);
@@ -97,13 +91,40 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 [data-testid="stChatMessage"]:has([data-testid="chatAvatarIcon-assistant"]) { background:rgba(20,35,22,.8)    !important; border:1px solid rgba(107,143,113,.12) !important; }
 [data-testid="stChatMessage"] p { color:#d4e8d5 !important; }
 
+/* ── Chat input: dark background, BLACK text so it's readable ── */
 [data-testid="stChatInput"] {
-    background:rgba(20,35,22,.9) !important; border:1.5px solid rgba(107,143,113,.3) !important;
-    border-radius:14px !important; color:#d4e8d5 !important;
+    background: #ffffff !important;
+    border: 1.5px solid rgba(107,143,113,.5) !important;
+    border-radius: 14px !important;
 }
-[data-testid="stChatInput"]:focus-within { border-color:#6b8f71 !important; box-shadow:0 0 0 3px rgba(107,143,113,.1) !important; }
-[data-testid="stChatInput"] textarea { color:#d4e8d5 !important; }
-[data-testid="stChatInput"] textarea::placeholder { color:#4a6650 !important; }
+[data-testid="stChatInput"]:focus-within {
+    border-color: #6b8f71 !important;
+    box-shadow: 0 0 0 3px rgba(107,143,113,.15) !important;
+}
+[data-testid="stChatInput"] textarea {
+    color: #111111 !important;
+    background: #ffffff !important;
+    font-family: 'Hind Siliguri', sans-serif !important;
+    font-size: .95rem !important;
+}
+[data-testid="stChatInput"] textarea::placeholder { color: #777777 !important; }
+
+/* URL input box */
+.stTextInput input {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1.5px solid rgba(107,143,113,.4) !important;
+    border-radius: 10px !important;
+    font-family: 'Hind Siliguri', sans-serif !important;
+    font-size: .88rem !important;
+}
+.stTextInput input::placeholder { color: #888888 !important; }
+.stTextInput input:focus {
+    border-color: #6b8f71 !important;
+    box-shadow: 0 0 0 3px rgba(107,143,113,.12) !important;
+}
+.stTextInput label { color: #a8d5a2 !important; font-size: .75rem !important;
+                     letter-spacing: .08em !important; text-transform: uppercase !important; }
 
 .stButton button {
     background:rgba(107,143,113,.15) !important; border:1px solid rgba(107,143,113,.3) !important;
@@ -112,7 +133,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 }
 .stButton button:hover { background:rgba(107,143,113,.25) !important; }
 
-/* welcome */
 .welcome-screen { text-align:center; padding:4rem 2rem; }
 .welcome-screen .big-leaf { font-size:4rem; display:block; margin-bottom:1.2rem;
     animation:float 4s ease-in-out infinite; }
@@ -122,7 +142,6 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 .welcome-screen p  { color:#6b8f71; font-size:.95rem; line-height:1.8;
                      max-width:400px; margin:0 auto; }
 
-/* offline / error */
 .warn-box { background:rgba(192,97,74,.08); border:1px solid rgba(192,97,74,.3);
             border-radius:14px; padding:2rem; text-align:center; color:#e8907a; }
 .warn-box h3 { font-size:1.1rem; margin-bottom:.5rem; }
@@ -147,22 +166,20 @@ TOPICS = [
 ]
 
 # ── Session state ──────────────────────────────────────────────────────────────
-if "messages"     not in st.session_state: st.session_state.messages     = []
-if "topic"        not in st.session_state: st.session_state.topic        = TOPICS[0]
-if "backend_ok"   not in st.session_state: st.session_state.backend_ok   = None
-if "last_checked" not in st.session_state: st.session_state.last_checked = 0
+if "messages"      not in st.session_state: st.session_state.messages      = []
+if "topic"         not in st.session_state: st.session_state.topic         = TOPICS[0]
+if "backend_ok"    not in st.session_state: st.session_state.backend_ok    = None
+if "last_checked"  not in st.session_state: st.session_state.last_checked  = 0
+if "backend_url"   not in st.session_state: st.session_state.backend_url   = ""
 
-# ── Read backend URL from Streamlit secrets ────────────────────────────────────
-BACKEND_URL = st.secrets.get("BACKEND_URL", "").rstrip("/")
-
-# ── Health check (cached 30 s) ─────────────────────────────────────────────────
-def check_backend() -> bool:
-    if not BACKEND_URL:
+# ── Health check ───────────────────────────────────────────────────────────────
+def check_backend(url: str) -> bool:
+    if not url:
         return False
-    if time.time() - st.session_state.last_checked < 30:
+    if time.time() - st.session_state.last_checked < 30 and st.session_state.backend_ok is not None:
         return bool(st.session_state.backend_ok)
     try:
-        ok = requests.get(f"{BACKEND_URL}/health", timeout=5).status_code == 200
+        ok = requests.get(f"{url}/health", timeout=5).status_code == 200
     except Exception:
         ok = False
     st.session_state.backend_ok   = ok
@@ -179,11 +196,28 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # backend status pill
+    # ── ngrok URL input ────────────────────────────────────────
+    st.markdown('<div class="section-head">🔗 Colab Backend URL</div>', unsafe_allow_html=True)
+
+    url_input = st.text_input(
+        "Backend URL",
+        value=st.session_state.backend_url,
+        placeholder="https://xxxx.ngrok-free.app",
+        label_visibility="collapsed",
+    )
+
+    if url_input != st.session_state.backend_url:
+        st.session_state.backend_url  = url_input.rstrip("/")
+        st.session_state.backend_ok   = None   # force recheck
+        st.session_state.last_checked = 0
+
+    BACKEND_URL  = st.session_state.backend_url
+    backend_alive = check_backend(BACKEND_URL)
+
     if not BACKEND_URL:
-        st.markdown('<div class="status-badge status-offline"><span class="dot dot-red"></span>No backend URL</div>', unsafe_allow_html=True)
-    elif check_backend():
-        st.markdown('<div class="status-badge status-online"><span class="dot dot-green"></span>Colab backend online</div>', unsafe_allow_html=True)
+        st.markdown('<div class="status-badge status-offline"><span class="dot dot-red"></span>No URL entered</div>', unsafe_allow_html=True)
+    elif backend_alive:
+        st.markdown('<div class="status-badge status-online"><span class="dot dot-green"></span>Backend online ✓</div>', unsafe_allow_html=True)
     else:
         st.markdown('<div class="status-badge status-offline"><span class="dot dot-red"></span>Backend offline</div>', unsafe_allow_html=True)
 
@@ -204,6 +238,7 @@ with st.sidebar:
             st.rerun()
     with c2:
         if st.button("🔄 রিফ্রেশ", use_container_width=True):
+            st.session_state.backend_ok   = None
             st.session_state.last_checked = 0
             st.rerun()
 
@@ -217,34 +252,33 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# ── Guard: no URL configured ───────────────────────────────────────────────────
+# ── Guard: no URL ──────────────────────────────────────────────────────────────
 if not BACKEND_URL:
     st.markdown("""
     <div class="warn-box">
-      <h3>⚙️ Backend URL সেট করা হয়নি</h3>
-      <p>Streamlit Cloud → Settings → Secrets-এ যোগ করুন:<br><br>
-      <code>BACKEND_URL = "https://xxxx.ngrok-free.app"</code><br><br>
-      Google Colab-এ <code>colab/backend.py</code> চালানোর পর URL পাবেন।</p>
+      <h3>🔗 Colab Backend URL দিন</h3>
+      <p>বাম পাশের sidebar-এ ngrok URL পেস্ট করুন।<br><br>
+      Google Colab-এ <code>backend.py</code> চালালে URL পাবেন।<br>
+      দেখতে এরকম: <code>https://xxxx.ngrok-free.app</code></p>
     </div>
     """, unsafe_allow_html=True)
     st.stop()
 
-# ── Guard: backend offline ─────────────────────────────────────────────────────
-backend_alive = check_backend()
+# ── Guard: offline ─────────────────────────────────────────────────────────────
 if not backend_alive:
     st.markdown("""
     <div class="warn-box">
-      <h3>🔌 Colab Backend চালু নেই</h3>
-      <p>Google Colab-এ <code>colab/backend.py</code> চালু করুন (T4 GPU runtime)।<br>
-      নতুন ngrok URL কপি করে Streamlit Secrets আপডেট করুন।<br><br>
-      ⚠️ Colab ট্যাবটি সবসময় খোলা রাখতে হবে!</p>
+      <h3>🔌 Backend সংযুক্ত হচ্ছে না</h3>
+      <p>Colab-এ <code>backend.py</code> চালু আছে কিনা দেখুন।<br>
+      Colab ট্যাব বন্ধ করলে সার্ভার বন্ধ হয়ে যায়।<br><br>
+      URL সঠিক কিনা যাচাই করুন, তারপর 🔄 রিফ্রেশ করুন।</p>
     </div>
     """, unsafe_allow_html=True)
 
 # ── Topic bar ──────────────────────────────────────────────────────────────────
 st.markdown(f'<div class="topic-bar">📌 &nbsp; {st.session_state.topic}</div>', unsafe_allow_html=True)
 
-# ── Welcome screen ─────────────────────────────────────────────────────────────
+# ── Welcome ────────────────────────────────────────────────────────────────────
 if not st.session_state.messages:
     st.markdown("""
     <div class="welcome-screen">
@@ -264,7 +298,6 @@ for msg in st.session_state.messages:
 placeholder = "আপনার মনের কথা লিখুন…" if backend_alive else "⚠️ Colab backend চালু করুন…"
 
 if prompt := st.chat_input(placeholder, disabled=not backend_alive):
-
     with st.chat_message("user", avatar="🙂"):
         st.markdown(prompt)
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -301,7 +334,7 @@ if prompt := st.chat_input(placeholder, disabled=not backend_alive):
                         except json.JSONDecodeError:
                             pass
         except requests.exceptions.ConnectionError:
-            full = "🔌 Colab backend-এর সাথে সংযোগ হচ্ছে না। Colab ট্যাব খোলা আছে কিনা দেখুন।"
+            full = "🔌 সংযোগ হচ্ছে না। Colab ট্যাব খোলা আছে কিনা দেখুন।"
             box.markdown(full)
         except requests.exceptions.Timeout:
             full = "⏱ মডেল রেসপন্স করতে বেশি সময় নিচ্ছে। আবার চেষ্টা করুন।"

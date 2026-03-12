@@ -1,10 +1,23 @@
 # 🌿 মনের কথা — Bengali Mental Health Counsellor
+[![Model](https://img.shields.io/badge/🤗%20Model-kazol196295%2Fllama--3.1--8b--bengali--mental--health--counsellor-teal)](https://huggingface.co/kazol196295/llama-3.1-8b-bengali-mental-health-counsellor)
+[![Training Repo](https://img.shields.io/badge/GitHub-Training%20Repo-181717?logo=github)](https://github.com/kazol196295/llama-3.1-8b-bengali-mental-health-counsellor)
+[![Live App](https://img.shields.io/badge/🌿%20Live%20App-moner--kotha-green)](https://moner-kotha-kazol.streamlit.app)
 
 **A compassionate AI-powered mental health counselling chatbot in Bengali, built with a fine-tuned LLaMA 3.1 8B model.**
+
 
 🔗 **Live App:** [moner-kotha-kazol.streamlit.app](https://moner-kotha-kazol.streamlit.app)
 
 ---
+## 🔗 Related Repositories
+
+This app is powered by a custom fine-tuned model. The full training pipeline
+lives in a separate repository:
+
+| Repo | Purpose |
+|------|---------|
+| [llama-3.1-8b-bengali-mental-health-counsellor](https://github.com/kazol196295/llama-3.1-8b-bengali-mental-health-counsellor) | Fine-tuning (QLoRA + Unsloth), evaluation, model weights |
+| [kazol196295/llama-3.1-8b-bengali-mental-health-counsellor](https://huggingface.co/kazol196295/llama-3.1-8b-bengali-mental-health-counsellor) | Published model on HuggingFace Hub |
 
 ## 🏗️ Architecture
 

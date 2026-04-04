@@ -7,6 +7,12 @@
 
 
 🔗 **Live App:** [moner-kotha-kazol.streamlit.app](https://moner-kotha-kazol.streamlit.app)
+---
+## 🚀 Project Showcase
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/kazol196295/moner-kotha/main/moner%20kotha%20sample.png" width="70%" />
+</p>
 
 ---
 ## 🔗 Related Repositories

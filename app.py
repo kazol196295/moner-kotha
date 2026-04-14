@@ -15,8 +15,9 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600&family=Noto+Serif+Bengali:wght@400;700&display=swap');
 
 html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important; }
-#MainMenu, footer, header  { visibility: hidden; }
-.stDeployButton            { display: none; }
+#MainMenu, footer { visibility: hidden; }
+.stDeployButton { display: none; }
+header { background: transparent !important; }
 
 .stApp {
     background-color: #0f1a12;
@@ -148,6 +149,36 @@ html, body, [class*="css"] { font-family: 'Hind Siliguri', sans-serif !important
 .warn-box p  { font-size:.85rem; line-height:1.7; color:#c87060; }
 .warn-box code { background:rgba(192,97,74,.15); padding:.15rem .4rem;
                  border-radius:4px; font-size:.82rem; }
+            
+
+            
+/* ── Custom Red Barcode Sidebar Toggle ── */
+
+/* 1. Hide the default Streamlit arrow SVGs */
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarHeader"] button svg {
+    display: none !important;
+}
+
+/* 2. Inject the custom red 'barcode' icon */
+[data-testid="collapsedControl"]::before,
+[data-testid="stSidebarHeader"] button::before {
+    content: "||||" !important;  /* Vertical lines resembling a barcode */
+    color: #ff4b4b !important;   /* Bright red */
+    font-size: 1.5rem !important;
+    font-weight: 900 !important;
+    letter-spacing: -2px !important; /* Squeezes the lines together */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Add a slight hover effect */
+[data-testid="collapsedControl"]:hover::before,
+[data-testid="stSidebarHeader"] button:hover::before {
+    color: #cc0000 !important; /* Darker red on hover */
+}
+
 </style>
 """, unsafe_allow_html=True)
 
